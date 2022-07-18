@@ -50,3 +50,6 @@ TagManager:
   - name: Player
     uniqueID: 2891942917
     locked: 0
+  - name: Bugs
+    uniqueID: 315483747
+    locked: 0

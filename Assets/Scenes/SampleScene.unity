@@ -385,7 +385,7 @@ MonoBehaviour:
   _groundCheckSize: {x: 0.4, y: 0.1}
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 64
 --- !u!1001 &5416799607271943256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -439,6 +439,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5416799607114638002, guid: 7a4a408adccf60d4b9837618df9519d9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5416799607697785480, guid: 7a4a408adccf60d4b9837618df9519d9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5416799608408926627, guid: 7a4a408adccf60d4b9837618df9519d9, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

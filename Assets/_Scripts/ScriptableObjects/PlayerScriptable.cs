@@ -17,6 +17,16 @@ public class PlayerScriptable : ScriptableObject
     [Header("Drag")]
     public float frictionAmmount;
 
+    [Header("Jump")]
+    public float jumpForce;
+    public float coyoteTime;
+    [Range(0, 0.5f)] public float jumpBufferTime;
+
+    [Header("Gravity")]
+    public float gravityScale;
+    public float fallGravityMult;
+    public float quickFallGravityMult;
+
     [Header("Other settings")]
     public bool doKeepRunMomentum;
 }

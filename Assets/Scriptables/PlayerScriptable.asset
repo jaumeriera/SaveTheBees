@@ -12,11 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ffbbde34ff3374fbde653e64e42081, type: 3}
   m_Name: PlayerScriptable
   m_EditorClassIdentifier: 
-  runMaxSpeed: 9.5
-  acceleration: 9.3
-  deceleration: 15
-  accelPower: 1.05
+  runMaxSpeed: 9
+  acceleration: 9
+  deceleration: 9
+  accelPower: 1.2
   stopPower: 1.23
   turnPower: 1.13
-  frictionAmmount: 0
+  frictionAmmount: 0.2
+  jumpForce: 12
+  coyoteTime: 0
+  jumpBufferTime: 0.1
+  gravityScale: 1.5
+  fallGravityMult: 1.9
+  quickFallGravityMult: 1
   doKeepRunMomentum: 0

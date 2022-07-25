@@ -2,28 +2,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
     public Rigidbody2D RB { get; private set; }
 
+    public bool isJumping { get; private set; }
+    public float currentVertical { get; private set; }
+    public float previousVertical { get; private set; }
+
     [SerializeField] PlayerScriptable _settings;
 
+    public float LastPressedJumpTime { get; private set; }
+    public float LastOnGroundTime { get; private set; }
+
+    [SerializeField] private Transform _groundCheckPoint;
+    [SerializeField] private Vector2 _groundCheckSize;
+    [SerializeField] private LayerMask _groundLayer;
+
     // Start is called before the first frame update
-    void Awake()
-    {
-        RB = GetComponent<Rigidbody2D>(); ;
+    void Awake() {
+        RB = GetComponent<Rigidbody2D>();
+        SetGravityScale(_settings.gravityScale);
+        previousVertical = 0f;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+        LastOnGroundTime -= Time.deltaTime;
+        LastPressedJumpTime -= Time.deltaTime;
+
+        currentVertical = Input.GetAxis("Vertical");
+
+        if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer)) {
+            LastOnGroundTime = _settings.coyoteTime;
+        }
+            
+
+        if (RB.velocity.y >= 0) {
+            SetGravityScale(_settings.gravityScale);
+        }
+        else if (currentVertical < 0) {
+            SetGravityScale(_settings.gravityScale * _settings.quickFallGravityMult);
+        }
+        else {
+            SetGravityScale(_settings.gravityScale * _settings.fallGravityMult);
+        }
         
+        if (currentVertical > 0) {
+            OnJump();
+        }
+        if (isJumping && RB.velocity.y < 0) {
+            isJumping = false;
+        }
+
+        if (CanJump() && LastPressedJumpTime > 0) {
+            isJumping = true;
+            Jump();
+        }
+        previousVertical = currentVertical;
     }
 
     private void FixedUpdate() {
         DecelerateByFriction();
         Run();
-        
+
     }
 
     private void Run() {
@@ -33,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
         float speedDiff = targetSpeed - RB.velocity.x;
         // Change acceleration depending on the situation
         float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? _settings.acceleration : _settings.deceleration;
-        print(accelRate);
         //if we want to run but are already going faster than max run speed
         if (((RB.velocity.x > targetSpeed && targetSpeed > 0.01f) || (RB.velocity.x < targetSpeed && targetSpeed < -0.01f)) && _settings.doKeepRunMomentum) {
             accelRate = 0; //prevent any deceleration from happening, or in other words conserve are current momentum
@@ -62,5 +103,28 @@ public class PlayerMovement : MonoBehaviour
         force.y *= Mathf.Sign(RB.velocity.y);
 
         RB.AddForce(-force, ForceMode2D.Impulse); //applies force against movement direction
+    }
+
+    private void Jump() {
+        LastPressedJumpTime = 0;
+        LastOnGroundTime = 0;
+
+        float force = _settings.jumpForce;
+        if (RB.velocity.y < 0) {
+            force -= RB.velocity.y;
+        }
+        RB.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+    }
+
+    private bool CanJump() {
+        return LastOnGroundTime > 0 && previousVertical <= currentVertical && !isJumping;
+    }
+
+    public void OnJump() {
+        LastPressedJumpTime = _settings.jumpBufferTime;
+    }
+
+    public void SetGravityScale(float scale) {
+        RB.gravityScale = scale;
     }
 }

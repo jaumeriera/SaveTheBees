@@ -22,6 +22,7 @@ MonoBehaviour:
   jumpForce: 12
   coyoteTime: 0.15
   jumpBufferTime: 0.1
+  shootCooldown: 2
   gravityScale: 1.5
   fallGravityMult: 1.9
   quickFallGravityMult: 1

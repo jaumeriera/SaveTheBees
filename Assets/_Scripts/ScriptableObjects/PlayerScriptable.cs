@@ -22,6 +22,10 @@ public class PlayerScriptable : ScriptableObject
     public float coyoteTime;
     [Range(0, 0.5f)] public float jumpBufferTime;
 
+    [Header("Shoot")]
+    public float shootCooldown;
+
+
     [Header("Gravity")]
     public float gravityScale;
     public float fallGravityMult;

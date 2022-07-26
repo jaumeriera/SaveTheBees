@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2127650398297501669}
   - component: {fileID: 859300395841036536}
   - component: {fileID: 7759472236317402868}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Worm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

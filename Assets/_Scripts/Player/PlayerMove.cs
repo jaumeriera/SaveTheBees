@@ -48,7 +48,7 @@ public class PlayerMove : MonoBehaviour
             SetGravityScale(_settings.gravityScale * _settings.fallGravityMult);
         }
         
-        if (currentVertical > 0) {
+        if (Input.GetAxisRaw("Vertical") > 0) {
             OnJump();
         }
         if (isJumping && RB.velocity.y < 0) {
